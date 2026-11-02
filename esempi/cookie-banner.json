@@ -1,0 +1,25 @@
+{
+  "_nota": "Esempio di prova per il primo cliente (servizi UnHub). Le risposte sono ipotesi da correggere; «?» = da decidere. Il titolare resta aperto finché non si decide se è Eric come persona fisica/ditta individuale o una società.",
+  "servizio_nome": "cookie-banner.ch",
+  "servizio_url": "https://cookie-banner.ch",
+  "servizio_descrizione": "un generatore di banner per i cookie per siti web",
+  "titolare_nome": "?",
+  "titolare_forma": "?",
+  "titolare_indirizzo": "?",
+  "titolare_email": "?",
+  "consulente": false,
+  "utenti_ue": "occasionali",
+  "dati_raccolti": ["account", "contatto", "utilizzo"],
+  "dati_particolari": false,
+  "dati_da_terzi": false,
+  "scopi": ["servizio", "account", "assistenza", "sicurezza"],
+  "fornitori": [
+    {"nome": "Infomaniak Network SA", "scopo": "hosting del servizio e invio delle email", "paese": "CH"}
+  ],
+  "estero": "no",
+  "cookie": ["necessari"],
+  "decisioni_automatizzate": false,
+  "conservazione": "finché il tuo account è attivo e per 30 giorni dopo la sua chiusura; i dati tecnici di utilizzo per al massimo 90 giorni",
+  "misure": ["trasporto", "accessi", "backup", "aggiornamenti", "hosting_ch"],
+  "minori": false
+}

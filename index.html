@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPaToS.ch — Cose da Grandi, Senza il Pathos (LegalTech Svizzero)</title>
+  <meta name="description" content="PPaToS.ch — Generazione di documenti legali svizzeri su misura (nLPD, CO, GDPR) con clausole collegate alle norme vigenti e pacchetto per la revisione dell'avvocato.">
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card: #151d2c;
+      --card-alt: #1c2638;
+      --border: #233044;
+      --border-focus: #3b82f6;
+      --accent: #d90429;
+      --accent-hover: #ef233c;
+      --swiss-red: #ff0000;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --dim: #64748b;
+      --code-bg: #080c14;
+      --radius: 12px;
+      --transition: all 0.2s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: rgba(11, 15, 23, 0.9);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 1rem 1.5rem;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .logo-badge {
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand-tag {
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-left: 1px solid var(--border);
+      padding-left: 10px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .nav-link:hover { color: var(--text); }
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: var(--card-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--border); }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+    }
+    .triad-banner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin: 0 auto 2.5rem;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+    .triad-item {
+      padding: 0.5rem;
+    }
+    .triad-item strong {
+      display: block;
+      color: #60a5fa;
+      font-size: 1.05rem;
+    }
+    .triad-item span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .triad-item.active strong {
+      color: var(--accent-hover);
+    }
+
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .generator-grid { grid-template-columns: 1fr; }
+      .triad-banner { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .panel-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+    .form-desc {
+      font-size: 0.75rem;
+      color: var(--dim);
+      margin-bottom: 0.5rem;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85rem;
+      background: var(--bg);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .checkbox-item input { margin-top: 3px; }
+
+    .preview-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .tab-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: var(--transition);
+      font-size: 0.85rem;
+    }
+    .tab-btn.active {
+      background: var(--card-alt);
+      color: white;
+    }
+    .doc-preview {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      max-height: 550px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    .citation-badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin: 2px 0;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <div class="logo-badge">🇨🇭 PPaToS</div>
+        <div class="brand-title">PPaToS.ch</div>
+        <div class="brand-tag">Cose da Grandi, Senza il Pathos</div>
+      </a>
+      <div class="nav-links">
+        <a href="https://nuova-norma.pagine.ch" class="nav-link">Nuova-Norma</a>
+        <a href="https://anorma.pagine.ch" class="nav-link">Anorma</a>
+        <a href="#compila" class="btn">Compila Documento</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Documenti Legali Svizzeri dal Codice</h1>
+      <p>Ogni clausola ancorata agli articoli in vigore di nLPD, CO e GDPR. Generazione automatica del pacchetto di verifica pronto per il tuo avvocato.</p>
+      
+      <div class="triad-banner">
+        <div class="triad-item">
+          <strong>Nuova-Norma</strong>
+          <span>«sa» — Fedlex & Sentenze</span>
+        </div>
+        <div class="triad-item">
+          <strong>Anorma</strong>
+          <span>«risponde» — Verifica interattiva</span>
+        </div>
+        <div class="triad-item active">
+          <strong>PPaToS</strong>
+          <span>«scrive» — Contratti e clausole</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="generator-grid" id="compila">
+      <!-- Questionario -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Questionario Adattivo (nLPD / GDPR)</div>
+          <span class="citation-badge">Modello privacy-nlpd v0.1</span>
+        </div>
+
+        <form id="formQuestionario">
+          <div class="form-group">
+            <label class="form-label" for="servizio_nome">Nome del servizio o app</label>
+            <div class="form-desc">Titolo e ambito dell'informativa</div>
+            <input type="text" id="servizio_nome" class="form-input" value="MioServizio.ch" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="servizio_url">Indirizzo Web (URL)</label>
+            <div class="form-desc">Dove l'informativa resta consultabile</div>
+            <input type="url" id="servizio_url" class="form-input" value="https://mioservizio.ch" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="titolare_nome">Titolare del Trattamento (Persona o Società)</label>
+            <div class="form-desc">Art. 19 cpv. 2 lett. a LPD: identità del titolare</div>
+            <input type="text" id="titolare_nome" class="form-input" value="Mio Servizio Sagl, Lugano" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="titolare_email">Email per la Protezione dei Dati</label>
+            <div class="form-desc">Canale ufficiale per l'esercizio dei diritti (accesso, cancellazione)</div>
+            <input type="email" id="titolare_email" class="form-input" value="privacy@mioservizio.ch" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="utenti_ue">Target Geografico Utenti</label>
+            <div class="form-desc">Attiva le clausole GDPR (Art. 3 cpv. 2 GDPR) se l'offerta si rivolge all'UE</div>
+            <select id="utenti_ue" class="form-select">
+              <option value="no">No, esclusivamente residenti in Svizzera (solo nLPD)</option>
+              <option value="occasionali">Occasionali dall'estero (prevalente Svizzera)</option>
+              <option value="mirati">Sì, servizio mirato anche all'UE (nLPD + GDPR)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Dati Personali Trattati</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" id="dati_account" checked>
+                <span>Dati Account (nome, email, credenziali di accesso)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="dati_tecnici" checked>
+                <span>Dati Tecnici di Navigazione (IP anonimizzato, log HTTP)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="dati_cookie">
+                <span>Cookie analitici o di preferenza (richiede banner preventivo)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="dati_pagamenti">
+                <span>Dati Pagamenti e Fatturazione (CO RS 220, 10 anni conservazione)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="hosting_locazione">Infrastruttura di Hosting</label>
+            <select id="hosting_locazione" class="form-select">
+              <option value="svizzera" selected>🇨🇭 Svizzera Sovrana (Infomaniak dc4-a Ginevra / Zero US Cloud Act)</option>
+              <option value="ue">🇪🇺 Unione Europea (Spazio Economico Europeo con decisione adeguatezza)</option>
+              <option value="usa">🇺🇸 Stati Uniti (Richiede clausole contrattuali tipo SCC)</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn" style="width: 100%; justify-content: center; padding: 12px;" onclick="generaDocumento()">
+            ⚡ Assembla Documento & Pacchetto Avvocato
+          </button>
+        </form>
+      </div>
+
+      <!-- Anteprima Documento -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('doc')">📄 Documento Finale (Markdown)</button>
+            <button class="tab-btn" onclick="switchTab('avvocato')">⚖️ Pacchetto Avvocato</button>
+          </div>
+          <div class="preview-actions">
+            <button class="btn btn-secondary" onclick="copiaTesto()">📋 Copia</button>
+          </div>
+        </div>
+
+        <div id="anteprimaContenuto" class="doc-preview">Compila i campi del questionario e clicca su "Assembla Documento" per generare l'informativa collegata alle norme ufficiali svizzere.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>🇨🇭 PPaToS.ch — Ecosistema Sovrano UnHub • Connesso all'archivio Fedlex tramite Nuova-Norma.ch</p>
+    <p style="margin-top: 6px; font-size: 0.75rem;">Documenti preparati dal codice su modelli deterministici. Verificare con il proprio legale prima della pubblicazione.</p>
+  </footer>
+
+  <script>
+    let docGenerato = "";
+    let pacchettoGenerato = "";
+    let tabAttivo = "doc";
+
+    function generaDocumento() {
+      const nome = document.getElementById("servizio_nome").value.trim() || "Il Servizio";
+      const url = document.getElementById("servizio_url").value.trim() || "https://servizio.ch";
+      const titolare = document.getElementById("titolare_nome").value.trim() || "Titolare del trattamento";
+      const email = document.getElementById("titolare_email").value.trim() || "privacy@servizio.ch";
+      const targetUE = document.getElementById("utenti_ue").value;
+      const hosting = document.getElementById("hosting_locazione").value;
+      
+      const haAccount = document.getElementById("dati_account").checked;
+      const haTecnici = document.getElementById("dati_tecnici").checked;
+      const haCookie = document.getElementById("dati_cookie").checked;
+      const haPagamenti = document.getElementById("dati_pagamenti").checked;
+
+      const dataOggi = new Date().toISOString().split('T')[0];
+
+      // Assembla Testo Documento
+      let md = `# Informativa sulla protezione dei dati di ${nome}\n\n`;
+      md += `*Ultimo aggiornamento: ${dataOggi} • Redatto in conformità alla Legge federale sulla protezione dei dati (nLPD, RS 235.1)*\n\n`;
+      
+      md += `## 1. Titolare del trattamento\n`;
+      md += `Il titolare del trattamento dei dati personali ai sensi dell'art. 19 cpv. 2 lett. a LPD è:\n\n`;
+      md += `> **${titolare}**\n`;
+      md += `> Indirizzo Web: ${url}\n`;
+      md += `> Contatto per la protezione dei dati: [${email}](mailto:${email})\n\n`;
+
+      if (targetUE === "mirati") {
+        md += `> *Rappresentante nell'Unione Europea (Art. 27 GDPR): da formalizzare prima dell'apertura mirata al mercato UE.*\n\n`;
+      }
+
+      md += `## 2. Dati trattati e finalità\n`;
+      md += `Trattiamo esclusivamente i dati personali necessari all'erogazione dei nostri servizi in ossequio al principio di proporzionalità (art. 6 cpv. 2 LPD):\n\n`;
+      if (haTecnici) {
+        md += `- **Dati tecnici di navigazione**: indirizzo IP (anonimizzato nei log di transito), user-agent e timestamp, trattati per garantire la sicurezza del sistema (art. 8 LPD).\n`;
+      }
+      if (haAccount) {
+        md += `- **Dati del profilo e account**: nome, indirizzo email e credenziali di accesso fornite volontariamente al momento della registrazione per l'esecuzione del contratto (art. 6 LPD / art. 6 cpv. 1 lett. b GDPR).\n`;
+      }
+      if (haCookie) {
+        md += `- **Preferenze e strumenti di tracciamento**: cookie strettamente necessari e impostazioni selezionate dall'utente tramite apposito banner.\n`;
+      }
+      if (haPagamenti) {
+        md += `- **Dati di transazione e fatturazione**: estremi contabili conservati per il rispetto degli obblighi legali e di rendiconto (art. 958f CO, 10 anni).\n`;
+      }
+      md += `\n`;
+
+      md += `## 3. Luogo del trattamento e hosting\n`;
+      if (hosting === "svizzera") {
+        md += `I dati personali sono ospitati ed elaborati esclusivamente su infrastruttura situata sul territorio della **Svizzera** (Infomaniak dc4-a, Ginevra). I dati non lasciano i confini elvetici e sono immuni da legislazioni extraterritoriali come il Cloud Act statunitense.\n\n`;
+      } else if (hosting === "ue") {
+        md += `I dati sono conservati su server situati nello Spazio Economico Europeo (UE), destinatario di decisione di adeguatezza del Consiglio federale svizzero (art. 16 LPD).\n\n`;
+      } else {
+        md += `Il trasferimento verso server situati negli Stati Uniti avviene previa stipula di Clausole Contrattuali Standard (SCC) approvate dall'IFPDT (art. 16 cpv. 2 lett. d LPD).\n\n`;
+      }
+
+      md += `## 4. Diritti dell'interessato\n`;
+      md += `In ogni momento l'interessato può esercitare i seguenti diritti garantiti dagli artt. 25-29 LPD:\n`;
+      md += `- Diritto di accesso ai dati personali trattati (art. 25 LPD);\n`;
+      md += `- Diritto di rettifica o completamento (art. 32 LPD);\n`;
+      md += `- Diritto alla cancellazione o limitazione del trattamento (art. 32 cpv. 2 LPD);\n`;
+      md += `- Diritto di reclamo presso l'Incaricato federale della protezione dei dati e della trasparenza (IFPDT, Feldeggweg 1, 3003 Berna).\n\n`;
+      md += `Per esercitare qualsiasi diritto è sufficiente inviare una richiesta a: ${email}.\n`;
+
+      docGenerato = md;
+
+      // Assembla Pacchetto Avvocato
+      let pacchetto = `# PACCHETTO DI REVISIONE PER L'AVVOCATO\n`;
+      pacchetto += `**Documento**: Informativa sulla protezione dei dati per ${nome}\n`;
+      pacchetto += `**Generato con**: PPaToS.ch (motore deterministico su fonti Fedlex)\n`;
+      pacchetto += `**Data**: ${dataOggi}\n\n`;
+      pacchetto += `### 1. Fatti dichiarati dal cliente\n`;
+      pacchetto += `- Titolare: ${titolare}\n`;
+      pacchetto += `- Canale DPA: ${email}\n`;
+      pacchetto += `- Mercato UE: ${targetUE}\n`;
+      pacchetto += `- Hosting: ${hosting}\n`;
+      pacchetto += `- Trattamenti: account=${haAccount}, tecnici=${haTecnici}, cookie=${haCookie}, pagamenti=${haPagamenti}\n\n`;
+      
+      pacchetto += `### 2. Norme svizzere ed europee applicate\n`;
+      pacchetto += `- [RS 235.1 art. 6] Principi del trattamento (buona fede, proporzionalità, trasparenza)\n`;
+      pacchetto += `- [RS 235.1 art. 8] Sicurezza dei dati e misure tecniche adeguate\n`;
+      pacchetto += `- [RS 235.1 art. 16] Trasferimento di dati all'estero\n`;
+      pacchetto += `- [RS 235.1 art. 19] Obbligo d'informare nella raccolta dei dati\n`;
+      pacchetto += `- [RS 235.1 art. 25] Diritto d'accesso dell'interessato\n`;
+      if (haPagamenti) {
+        pacchetto += `- [RS 220 art. 958f] Obbligo di conservazione decennale della contabilità\n`;
+      }
+      if (targetUE === "mirati") {
+        pacchetto += `- [GDPR art. 3(2)] Ambito di applicazione territoriale extraterritoriale\n`;
+        pacchetto += `- [GDPR art. 27] Rappresentanti di titolari non stabiliti nell'Unione\n`;
+      }
+      pacchetto += `\n### 3. Punti aperti per la revisione legale\n`;
+      if (targetUE === "mirati") {
+        pacchetto += `⚠️ **PUNTO APERTO**: Designare formalmente il Rappresentante UE con contratto di mandato prima del rilascio pubblicitario in Europa.\n`;
+      }
+      if (haCookie) {
+        pacchetto += `⚠️ **PUNTO APERTO**: Integrare il registro dei consensi (CMP) per dimostrare l'opt-in ai sensi dell'art. 6 cpv. 7 LPD.\n`;
+      }
+      pacchetto += `✅ Tutti gli altri requisiti nLPD risultano conformi alla prassi IFPDT 2026.\n`;
+
+      pacchettoGenerato = pacchetto;
+
+      aggiornaVista();
+    }
+
+    function switchTab(tab) {
+      tabAttivo = tab;
+      document.querySelectorAll(".tab-btn").forEach((btn, idx) => {
+        btn.classList.toggle("active", (tab === "doc" && idx === 0) || (tab === "avvocato" && idx === 1));
+      });
+      aggiornaVista();
+    }
+
+    function aggiornaVista() {
+      const container = document.getElementById("anteprimaContenuto");
+      if (tabAttivo === "doc") {
+        container.textContent = docGenerato || "Clicca su «Assembla Documento» per avviare la generazione.";
+      } else {
+        container.textContent = pacchettoGenerato || "Clicca su «Assembla Documento» per generare il pacchetto avvocato.";
+      }
+    }
+
+    function copiaTesto() {
+      const testo = tabAttivo === "doc" ? docGenerato : pacchettoGenerato;
+      if (!testo) return;
+      navigator.clipboard.writeText(testo).then(() => {
+        alert("Copiato negli appunti!");
+      });
+    }
+
+    // Inizializza al caricamento
+    generaDocumento();
+  </script>
+</body>
+</html>

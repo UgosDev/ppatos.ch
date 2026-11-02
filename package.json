@@ -1,0 +1,22 @@
+{
+  "name": "ppatos-ch",
+  "version": "1.0.0",
+  "description": "PPaToS.ch — Generatore sovrano di contratti e informative legali collegate alle norme vigenti",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-dist.mjs",
+    "deploy:pagine": "node scripts/deployToPagine.mjs",
+    "test": "py -m unittest discover -s tests"
+  },
+  "keywords": [
+    "ppatos",
+    "legaltech",
+    "swiss-law",
+    "nlpd",
+    "gdpr",
+    "contracts",
+    "unhub"
+  ],
+  "author": "UnHub",
+  "license": "ISC"
+}
