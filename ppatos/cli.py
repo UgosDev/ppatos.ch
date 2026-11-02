@@ -6,6 +6,7 @@
   py -m ppatos compila privacy-nlpd --risposte mie.json [--uscita cartella] [--completa]
   py -m ppatos controlla data/bozze/.../bozza.json               # le norme citate sono cambiate?
   py -m ppatos controlla-modelli [--archivio]
+  py -m ppatos sito [--porta 8767] [--senza-browser]               # il sito locale
 
 Nelle risposte «?» vuol dire «da decidere»: la bozza si compila lo stesso, con il segnaposto e un punto aperto.
 """
@@ -175,6 +176,12 @@ def cmd_controlla_modelli(a) -> int:
     return 1 if totale else 0
 
 
+def cmd_sito(a) -> int:
+    from . import web
+    web.serve(a.porta, open_browser=not a.senza_browser)
+    return 0
+
+
 def main(argv=None) -> None:
     p = argparse.ArgumentParser(prog="ppatos", description="PPaToS: documenti legali su misura, legati alle norme.")
     sub = p.add_subparsers(dest="comando", required=True)
@@ -197,5 +204,9 @@ def main(argv=None) -> None:
     s = sub.add_parser("controlla-modelli", help="verifica la scrittura dei modelli")
     s.add_argument("--archivio", action="store_true", help="verifica anche che le norme esistano in archivio")
     s.set_defaults(f=cmd_controlla_modelli)
+    s = sub.add_parser("sito", help="apre il sito locale (porta 8767)")
+    s.add_argument("--porta", type=int, default=8767)
+    s.add_argument("--senza-browser", action="store_true")
+    s.set_defaults(f=cmd_sito)
     a = p.parse_args(argv)
     sys.exit(a.f(a))
