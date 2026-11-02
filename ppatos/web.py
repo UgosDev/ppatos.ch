@@ -586,6 +586,23 @@ Impronta della bozza <span class="mono">{escape(b["impronta"][:12])}</span>.</sp
 </aside></div>"""
 
 
+def _porta_atrium_html(b: dict, note: list | None = None) -> str:
+    """«Invita un socio o il tuo avvocato»: apre una questione su Atrium con il titolo del documento e i punti aperti.
+    La bozza completa resta qui (si scarica quando serve): nella questione non entrano le risposte al questionario."""
+    punti = [p["testo"] for p in b["punti_aperti"]] + [f"Da chiarire: {nt['testo']}" for nt in (note or [])]
+    righe = "\n".join("· " + t for t in punti[:6]) + (f"\n· e altri {len(punti) - 6}" if len(punti) > 6 else "")
+    n = len(b["clausole"])
+    testo = (f"Bozza con {n} {'clausola' if n == 1 else 'clausole'}"
+             + (f" e {len(punti)} {'punto aperto' if len(punti) == 1 else 'punti aperti'}:\n{righe}" if punti
+                else ", nessun punto aperto."))
+    return triade.porta_atrium_html(
+        {"prodotto": "ppatos", "titolo": b["titolo"], "testo": testo},
+        "Rivedila con qualcuno",
+        "Invita un socio, un collega o il tuo avvocato in una questione su Atrium. Porti il titolo e i punti aperti; "
+        "la bozza completa resta qui e la scarichi quando serve.",
+        "Invita un socio o il tuo avvocato")
+
+
 def bozza_page(codice: str, s: dict) -> bytes:
     m = questionario.carica_modello(s["modello"])
     b = assembla.assembla(m, s["risposte"], RISOLUTORE())
@@ -593,7 +610,7 @@ def bozza_page(codice: str, s: dict) -> bytes:
              f'<a class="btn btn-scuro btn-piccolo" href="/scarica?{_q(s=codice, f="documento")}">Scarica</a></div>')
     azione = {"tipo": "nota", "etichetta": "Aggiungi una domanda per l'avvocato", "url": "/nota", "campi": {"s": codice},
               "fatto": "Aggiunto ai punti aperti per l'avvocato"}
-    corpo = bozza_html(b, m, codice, s.get("note"))
+    corpo = bozza_html(b, m, codice, s.get("note")) + _porta_atrium_html(b, s.get("note"))
     ricarica = "<script>document.addEventListener('triade:azione',function(){setTimeout(function(){location.reload()},900)})</script>"
     return _page(b["titolo"], corpo + ricarica, testa=testa, largo=True, azione=azione)
 

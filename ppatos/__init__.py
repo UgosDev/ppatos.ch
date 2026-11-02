@@ -5,4 +5,4 @@ risposte del questionario, lega ogni clausola agli articoli di legge nell'archiv
 e impronta del testo) e prepara il pacchetto per l'avvocato. Cose da grandi, senza il pathos.
 """
 
-__version__ = "0.1"
+__version__ = "0.2"
